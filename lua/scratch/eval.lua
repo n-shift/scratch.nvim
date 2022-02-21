@@ -5,4 +5,14 @@ function eval.lua(lines)
     loadstring(chunk)()
 end
 
+function eval.python(lines)
+    local chunk = table.concat(lines, '\\n')
+    local exec = "python -c \"exec('"..chunk.."')\""
+    vim.fn.jobstart(exec, {
+        on_stdout = function(_, data)
+            print(table.concat(data))
+        end,
+    })
+end
+
 return eval
