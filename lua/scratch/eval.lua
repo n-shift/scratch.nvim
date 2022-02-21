@@ -15,4 +15,14 @@ function eval.python(lines)
     })
 end
 
+function eval.javascript(lines)
+    local chunk = table.concat(lines, '\\n')
+    local exec = "node -e \"eval('"..chunk.."')\""
+    vim.fn.jobstart(exec, {
+        on_stdout = function(_, data)
+            print(table.concat(data))
+        end,
+    })
+end
+
 return eval
