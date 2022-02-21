@@ -25,4 +25,14 @@ function eval.javascript(lines)
     })
 end
 
+function eval.typescript(lines)
+    local chunk = table.concat(lines, '\\n')
+    local exec = "ts-node -e \"eval('"..chunk.."')\""
+    vim.fn.jobstart(exec, {
+        on_stdout = function(_, data)
+            print(table.concat(data))
+        end,
+    })
+end
+
 return eval
